@@ -1,0 +1,64 @@
+flowchart TB
+    %% Part 5. Flowchart
+
+
+    subgraph BS["bubbleSort(arr)"]
+        direction TB
+        B0([Start]) --> B1[n = arr.length<br/>i = 0]
+        B1 --> B2{i < n - 1?}
+        B2 -- No --> B9([Return])
+        B2 -- Yes --> B3[swapped = false<br/>j = 0]
+        B3 --> B4{j < n - 1 - i?}
+        B4 -- Yes --> B5{"arr[j] > arr[j+1]?"}
+        B5 -- Yes --> B6["swap arr[j], arr[j+1]<br/>swapped = true"]
+        B5 -- No --> B7[j = j + 1]
+        B6 --> B7
+        B7 --> B4
+        B4 -- No --> B8{swapped?}
+        B8 -- No --> B9
+        B8 -- Yes --> B10[i = i + 1]
+        B10 --> B2
+    end
+
+    subgraph RND["createRandomArray(n)"]
+        direction TB
+        R0([Start]) --> R1[create arr of size n<br/>i = 0]
+        R1 --> R2{i < n?}
+        R2 -- Yes --> R3["arr[i] = random 0..99<br/>i = i + 1"] --> R2
+        R2 -- No --> R4([Return arr])
+    end
+
+    subgraph USR["createUserArray(n)"]
+        direction TB
+        U0([Start]) --> U1[create arr of size n<br/>i = 0]
+        U1 --> U2{i < n?}
+        U2 -- Yes --> U3[/"Input arr[i]"/] --> U5[i = i + 1] --> U2
+        U2 -- No --> U4([Return arr])
+    end
+
+    subgraph PRT["printArray(arr)"]
+        direction TB
+        P0([Start]) --> P1[i = 0]
+        P1 --> P2{i < arr.length?}
+        P2 -- Yes --> P3[/"Output arr[i]"/] --> P5[i = i + 1] --> P2
+        P2 -- No --> P4([Return])
+    end
+
+    subgraph MAIN["main()"]
+        direction TB
+        M0([Start]) --> M1[/Input n/]
+        M1 --> M2{n > 0?}
+        M2 -- No --> M3[/Output: Must be > 0/] --> M1
+        M2 -- Yes --> M4[/Ask: Generate random values? y/n/]
+        M4 --> M5{answer = y?}
+        M5 -- Yes --> M6[[arr = createRandomArray n]]
+        M5 -- No --> M7[[arr = createUserArray n]]
+        M6 --> M8[[printArray arr]]
+        M7 --> M8
+        M8 --> M9[[bubbleSort arr]]
+        M9 --> M10[[printArray arr]]
+        M10 --> M11[/Ask: Repeat? y/n/]
+        M11 --> M12{answer = y?}
+        M12 -- Yes --> M1
+        M12 -- No --> M13([End])
+    end
